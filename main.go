@@ -36,18 +36,18 @@ func onesolution(board [8][8]int, sl []square) ([8][8]int, []square) {
 				board = chess.Queen(i+1, j+1, board)
 				return onesolution(board, sl)
 			} else {
-				return board, sl
+				sl = append(sl, sq)
 			}
 		}
 	}
-	return onesolution(board, sl)
+	return board, sl
 }
 
 // put 8 queens on the board
 func main() {
 	var sl []square
 	var board [8][8]int
-	// trying one solution
+	// trying one solutionasga
 	board, sl = onesolution(board, sl)
 	PrintBoard(board)
 }

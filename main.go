@@ -35,8 +35,6 @@ func onesolution(board [8][8]int, sl []square) ([8][8]int, []square) {
 				sl = append(sl, sq)
 				board = chess.Queen(i+1, j+1, board)
 				return onesolution(board, sl)
-			} else {
-				sl = append(sl, sq)
 			}
 		}
 	}
@@ -48,6 +46,12 @@ func main() {
 	var sl []square
 	var board [8][8]int
 	// trying one solutionasga
+	// i have to change just the position of the new queen and move on ?
+
 	board, sl = onesolution(board, sl)
+	for _, item := range sl {
+		fmt.Println(item)
+	}
+
 	PrintBoard(board)
 }

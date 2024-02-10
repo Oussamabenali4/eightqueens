@@ -25,12 +25,22 @@ func free(pos square, seen []square) bool {
 	return true
 }
 
+// i need to not repeat
+func notin(sq square, sl []square) bool {
+	for _, item := range sl {
+		if item.x == sq.x && item.y == sq.y {
+			return false
+		}
+	}
+	return true
+}
+
 func onesolution(board [8][8]int, sl []square) ([8][8]int, []square) {
 	var sq square
 	for i := 0; i < 8; i++ {
 		for j := 0; j < 8; j++ {
 			sq = square{x: i, y: j}
-			if board[i][j] != 8 && board[i][j] != 1 && free(sq, sl) {
+			if board[i][j] != 8 && board[i][j] != 1 && free(sq, sl) && notin(sq, sl) {
 				// here i need a data type
 				sl = append(sl, sq)
 				board = chess.Queen(i+1, j+1, board)
@@ -45,6 +55,7 @@ func onesolution(board [8][8]int, sl []square) ([8][8]int, []square) {
 func main() {
 	var sl []square
 	var board [8][8]int
+	df := board
 	// trying one solutionasga
 	// i have to change just the position of the new queen and move on ?
 
@@ -52,6 +63,25 @@ func main() {
 	for _, item := range sl {
 		fmt.Println(item)
 	}
-
 	PrintBoard(board)
+	board = df
+	board, sl = onesolution(board, sl)
+	for _, item := range sl {
+		fmt.Println(item)
+	}
+	PrintBoard(board)
+	board = df
+	board, sl = onesolution(board, sl)
+	for _, item := range sl {
+		fmt.Println(item)
+	}
+	PrintBoard(board)
+	board = df
+	board, sl = onesolution(board, sl)
+	for _, item := range sl {
+		fmt.Println(item)
+	}
+	PrintBoard(board)
+	board = df
+
 }

@@ -9,7 +9,7 @@ func main() {
 	var solutions [][8]int
 	y := 0
 	y, board, solutions = solution(y, 1, board, solutions)
-	fmt.Println(solutions)
+	solution_print(solutions)
 	fmt.Println(len(solutions))
 }
 
@@ -64,4 +64,13 @@ func diag(i int, y int, board [8]int) bool {
 
 	}
 	return false
+}
+
+func solution_print(solutions [][8]int) {
+	for _, item := range solutions {
+		for _, dig := range item {
+			fmt.Print(dig)
+		}
+		fmt.Println()
+	}
 }

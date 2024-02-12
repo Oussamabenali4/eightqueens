@@ -69,7 +69,7 @@ func diag(i int, y int, board [8]int) bool {
 func solution_print(solutions [][8]int) {
 	for _, item := range solutions {
 		for _, dig := range item {
-			fmt.Print(dig)
+			fmt.Print(dig) // you can use z01 here like : z01.PrintRune(rune(dig) + '0')
 		}
 		fmt.Println()
 	}

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"github.com/01-edu/z01"
 )
 
 func main() {
@@ -10,7 +10,6 @@ func main() {
 	y := 0
 	y, board, solutions = solution(y, 1, board, solutions)
 	solution_print(solutions)
-	fmt.Println(len(solutions))
 }
 
 func solution(y int, start int, board [8]int, solutions [][8]int) (int, [8]int, [][8]int) { // i should pass the function as paramiter .
@@ -69,8 +68,8 @@ func diag(i int, y int, board [8]int) bool {
 func solution_print(solutions [][8]int) {
 	for _, item := range solutions {
 		for _, dig := range item {
-			fmt.Print(dig) // you can use z01 here like : z01.PrintRune(rune(dig) + '0')
+			z01.PrintRune(rune(dig) + '0')
 		}
-		fmt.Println()
+		z01.PrintRune('\n')
 	}
 }

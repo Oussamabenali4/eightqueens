@@ -1,87 +1,54 @@
 package main
 
-import (
-	chess "eightqueens/packages"
-	"fmt"
-)
+import "fmt"
 
-func PrintBoard(board [8][8]int) {
-	for i := 0; i < 8; i++ {
-		fmt.Println(board[i])
-	}
+func main() {
+	var board [8]int
+	board = solution(0, 1, board)
+	fmt.Println(board)
 }
 
-type square struct {
-	x int
-	y int
-}
-
-func free(pos square, seen []square) bool {
-	for i := 0; i < len(seen); i++ {
-		if pos == seen[i] {
-			return false
-		}
-	}
-	return true
-}
-
-// i need to not repeat
-func notin(sq square, sl []square) bool {
-	for _, item := range sl {
-		if item.x == sq.x && item.y == sq.y {
-			return false
-		}
-	}
-	return true
-}
-
-func onesolution(board [8][8]int, sl []square) ([8][8]int, []square) {
-	var sq square
-	for i := 0; i < 8; i++ {
-		for j := 0; j < 8; j++ {
-			sq = square{x: i, y: j}
-			if board[i][j] != 8 && board[i][j] != 1 && free(sq, sl) && notin(sq, sl) {
-				// here i need a data type
-				sl = append(sl, sq)
-				board = chess.Queen(i+1, j+1, board)
-				return onesolution(board, sl)
+func solution(y int, start int, board [8]int) [8]int {
+	for i := start; i <= 8; i++ {
+		if !diag(i, y, board) {
+			board[y] = i
+			if y < 7 {
+				return solution(y+1, 1, board)
+			} else {
+				return board
+			}
+		} else {
+			if i < 8 {
+				continue
+			} else {
+				if board[0] == 8 {
+					return [8]int{}
+				}
+				if board[y-1] == 8 {
+					if y-1 == 0 {
+						return [8]int{}
+					}
+					return solution(y-2, board[y-2]+1, board)
+				}
+				return solution(y-1, board[y-1]+1, board)
 			}
 		}
 	}
-	return board, sl
+	return board
 }
 
-// put 8 queens on the board
-func main() {
-	var sl []square
-	var board [8][8]int
-	df := board
-	// trying one solutionasga
-	// i have to change just the position of the new queen and move on ?
+func diag(i int, y int, board [8]int) bool {
+	if board[0] == 0 {
+		return false
+	}
+	for j := 0; j < y; j++ {
+		if board[j] == 0 {
+			return false
+		}
+		if board[j]+y-j == i || board[j]-y+j == i || board[j] == i {
+			return true
+		}
 
-	board, sl = onesolution(board, sl)
-	for _, item := range sl {
-		fmt.Println(item)
 	}
-	PrintBoard(board)
-	board = df
-	board, sl = onesolution(board, sl)
-	for _, item := range sl {
-		fmt.Println(item)
-	}
-	PrintBoard(board)
-	board = df
-	board, sl = onesolution(board, sl)
-	for _, item := range sl {
-		fmt.Println(item)
-	}
-	PrintBoard(board)
-	board = df
-	board, sl = onesolution(board, sl)
-	for _, item := range sl {
-		fmt.Println(item)
-	}
-	PrintBoard(board)
-	board = df
-
+	return false
 }
